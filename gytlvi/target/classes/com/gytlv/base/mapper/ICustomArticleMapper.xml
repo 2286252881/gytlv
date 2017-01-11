@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gytlv.base.mapper.ICustomArticleMapper">
+	<sql id="query_where">
+		<if test="article!=null">
+			1=1
+			<if test="article.id != null">
+				and id=#{article.id}
+			</if>
+			<if test="article.articlename != null">
+				and articlename=like '%${article.articlename}%'
+			</if>
+			<if test="article.articletime != null">
+				and articletime='%${article.articletime}%'
+			</if>
+			<if test="article.articleip != null">
+				and articleip=#{article.articleip}
+			</if>
+			<if test="article.articleclick != null">
+				and articleclick=#{article.articleclick}
+			</if>
+			<if test="article.articletype != null">
+				and articletype=#{article.articletype}
+			</if>
+			<if test="article.userid != null">
+				and userid=#{article.userid}
+			</if>
+			<if test="article.articlemodle != null">
+				and articlemodle=#{article.articlesupport}
+			</if>
+			<if test="article.articlesupport != null">
+				and articlesupport=#{article.articlesupport}
+			</if>
+			<if test="article.articlecontent != null">
+				and articlecontent=#{article.articlecontent}
+			</if>
+		</if>
+	</sql>
+
+	<select id="finAllArticle" resultType="com.gytlv.base.baseEntity.TArticle"
+		parameterType="com.gytlv.base.baseEntity.TArticle">
+		select * from t_article
+		<where>
+			<include refid="query_where" />
+		</where>
+		limit #{article.page},#{article.pageSize};
+	</select>
+	<select id="finAllArticleCount" parameterType="com.gytlv.base.baseEntity.TArticle"
+		resultType="java.lang.Integer">
+		select count(*) from
+		t_article
+		<where>
+			<include refid="query_where" />
+		</where>
+	</select>
+	<select id="getArticleById" parameterType="String"
+		resultType="com.gytlv.base.baseEntity.TArticle">
+		select * from t_article where id=#{id};
+	</select>
+	<update id="doEditArticle" parameterType="com.gytlv.base.baseEntity.TArticle">
+		update t_article set
+		articlename=#{article.articlename},articletime=#{article.articletime},
+		articleip=#{article.articleip}, articletype=#{article.articletype},
+		articlemodle=#{article.articlemodle},
+		articlecontent=#{article.articlecontent},
+		articlesupport=#{article.articlesupport} where id=#{article.id};
+	</update>
+	<select id="findArticlesByArticleType" resultType="com.gytlv.base.baseEntity.TArticle">
+		select * from
+		t_article where articletype=#{articleType};
+	</select>
+	<select id="getSupportTopTen" resultType="com.gytlv.extendEntity.CustomArticle">
+		SELECT * FROM t_article
+		WHERE articlesupport='1' and articlemodle='1' ORDER BY articletime
+		DESC LIMIT 0 ,10;
+	</select>
+	<select id="getArticleByuserIdandArticleIdandArticletypeId"
+		resultType="com.gytlv.extendEntity.CustomArticle">
+		SELECT *,(SELECT username FROM t_user WHERE
+		t_user.id=#{userid}) username,
+		(SELECT articletypename FROM
+		t_articletype WHERE
+		t_articletype.id=#{articletypeid}) articleTypename
+		FROM t_article WHERE id=#{articleid} AND
+		userid=#{userid} AND
+		articletype=#{articletypeid};
+	</select>
+
+	<select id="getNewsTopTen" resultType="com.gytlv.extendEntity.CustomArticle">
+		SELECT * FROM t_article
+		ORDER BY articletime
+		DESC LIMIT 0 ,10;
+	</select>
+
+	<select id="getClicksTopTen" resultType="com.gytlv.extendEntity.CustomArticle">
+		SELECT * FROM t_article
+		ORDER BY articleclick
+		DESC LIMIT 0 ,5;
+	</select>
+
+
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gytlv.base.mapper.ICustomArticleTypeMapper" >
+	<select id="getArticleType" resultType="com.gytlv.base.baseEntity.TArticletype" >
+		select * from t_articletype where articletypename=#{articletypename} and userid=#{userid};
+	</select>
+	<insert id="addArticleType" parameterType="com.gytlv.base.baseEntity.TArticletype">
+		insert into t_articletype(id,userid,articletypename) values(#{articletype.id},#{articletype.userid},#{articletype.articletypename});
+	</insert>
+	<select id="getAllArticleTypeByuserId" parameterType="String" resultType="com.gytlv.base.baseEntity.TArticletype" >
+		select * from t_articletype where userid=#{userid};
+	</select>
+	<select id="getAllArticleTypesByuserId" parameterType="String" resultType="com.gytlv.extendEntity.Custarticletype">
+		SELECT * ,(SELECT COUNT(*) FROM t_article WHERE t_article.articletype=t_articletype.id) countArticle  FROM t_articletype WHERE userid=#{userid};
+	</select>
+</mapper>

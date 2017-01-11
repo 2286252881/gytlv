@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gytlv.base.mapper.TCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.gytlv.base.baseEntity.TComment" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="touserid" property="touserid" jdbcType="VARCHAR" />
+    <result column="comuserid" property="comuserid" jdbcType="VARCHAR" />
+    <result column="articleid" property="articleid" jdbcType="VARCHAR" />
+    <result column="commenttime" property="commenttime" jdbcType="TIMESTAMP" />
+    <result column="commentip" property="commentip" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.gytlv.base.baseEntity.TComment" extends="BaseResultMap" >
+    <result column="commentcontent" property="commentcontent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, touserid, comuserid, articleid, commenttime, commentip
+  </sql>
+  <sql id="Blob_Column_List" >
+    commentcontent
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.gytlv.base.baseEntity.TCommentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_comment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gytlv.base.baseEntity.TCommentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_comment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_comment
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_comment
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gytlv.base.baseEntity.TCommentExample" >
+    delete from t_comment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gytlv.base.baseEntity.TComment" >
+    insert into t_comment (id, touserid, comuserid, 
+      articleid, commenttime, commentip, 
+      commentcontent)
+    values (#{id,jdbcType=VARCHAR}, #{touserid,jdbcType=VARCHAR}, #{comuserid,jdbcType=VARCHAR}, 
+      #{articleid,jdbcType=VARCHAR}, #{commenttime,jdbcType=TIMESTAMP}, #{commentip,jdbcType=VARCHAR}, 
+      #{commentcontent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gytlv.base.baseEntity.TComment" >
+    insert into t_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="touserid != null" >
+        touserid,
+      </if>
+      <if test="comuserid != null" >
+        comuserid,
+      </if>
+      <if test="articleid != null" >
+        articleid,
+      </if>
+      <if test="commenttime != null" >
+        commenttime,
+      </if>
+      <if test="commentip != null" >
+        commentip,
+      </if>
+      <if test="commentcontent != null" >
+        commentcontent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="touserid != null" >
+        #{touserid,jdbcType=VARCHAR},
+      </if>
+      <if test="comuserid != null" >
+        #{comuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="articleid != null" >
+        #{articleid,jdbcType=VARCHAR},
+      </if>
+      <if test="commenttime != null" >
+        #{commenttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentip != null" >
+        #{commentip,jdbcType=VARCHAR},
+      </if>
+      <if test="commentcontent != null" >
+        #{commentcontent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gytlv.base.baseEntity.TCommentExample" resultType="java.lang.Integer" >
+    select count(*) from t_comment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_comment
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.touserid != null" >
+        touserid = #{record.touserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comuserid != null" >
+        comuserid = #{record.comuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.articleid != null" >
+        articleid = #{record.articleid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commenttime != null" >
+        commenttime = #{record.commenttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.commentip != null" >
+        commentip = #{record.commentip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commentcontent != null" >
+        commentcontent = #{record.commentcontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update t_comment
+    set id = #{record.id,jdbcType=VARCHAR},
+      touserid = #{record.touserid,jdbcType=VARCHAR},
+      comuserid = #{record.comuserid,jdbcType=VARCHAR},
+      articleid = #{record.articleid,jdbcType=VARCHAR},
+      commenttime = #{record.commenttime,jdbcType=TIMESTAMP},
+      commentip = #{record.commentip,jdbcType=VARCHAR},
+      commentcontent = #{record.commentcontent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_comment
+    set id = #{record.id,jdbcType=VARCHAR},
+      touserid = #{record.touserid,jdbcType=VARCHAR},
+      comuserid = #{record.comuserid,jdbcType=VARCHAR},
+      articleid = #{record.articleid,jdbcType=VARCHAR},
+      commenttime = #{record.commenttime,jdbcType=TIMESTAMP},
+      commentip = #{record.commentip,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gytlv.base.baseEntity.TComment" >
+    update t_comment
+    <set >
+      <if test="touserid != null" >
+        touserid = #{touserid,jdbcType=VARCHAR},
+      </if>
+      <if test="comuserid != null" >
+        comuserid = #{comuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="articleid != null" >
+        articleid = #{articleid,jdbcType=VARCHAR},
+      </if>
+      <if test="commenttime != null" >
+        commenttime = #{commenttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentip != null" >
+        commentip = #{commentip,jdbcType=VARCHAR},
+      </if>
+      <if test="commentcontent != null" >
+        commentcontent = #{commentcontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.gytlv.base.baseEntity.TComment" >
+    update t_comment
+    set touserid = #{touserid,jdbcType=VARCHAR},
+      comuserid = #{comuserid,jdbcType=VARCHAR},
+      articleid = #{articleid,jdbcType=VARCHAR},
+      commenttime = #{commenttime,jdbcType=TIMESTAMP},
+      commentip = #{commentip,jdbcType=VARCHAR},
+      commentcontent = #{commentcontent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gytlv.base.baseEntity.TComment" >
+    update t_comment
+    set touserid = #{touserid,jdbcType=VARCHAR},
+      comuserid = #{comuserid,jdbcType=VARCHAR},
+      articleid = #{articleid,jdbcType=VARCHAR},
+      commenttime = #{commenttime,jdbcType=TIMESTAMP},
+      commentip = #{commentip,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

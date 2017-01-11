@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gytlv.base.mapper.ICustomUserMapper">
+
+	<sql id="query_where">
+		<if test="user!=null">
+			1=1
+			<if test="user.id != null">
+				and id=#{user.id}
+			</if>
+			<if test="user.username != null">
+				and username=#{user.username}
+			</if>
+			<if test="user.password != null">
+				and password=#{user.password}
+			</if>
+		</if>
+	</sql>
+
+
+
+	<select id="getUserByUsername" parameterType="java.lang.String"
+		resultType="com.gytlv.base.baseEntity.TUser">
+		select * from t_user
+		where username=#{username}
+	</select>
+	<select id="getUserByUser" parameterType="com.gytlv.base.baseEntity.TUser"
+		resultType="com.gytlv.base.baseEntity.TUser">
+		select * from t_user
+		<where>
+			<include refid="query_where" />
+		</where>
+	</select>
+	<select id="getAllUser" resultType="com.gytlv.base.baseEntity.TUser">
+		select * from t_user;
+	</select>
+</mapper>

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gytlv.base.mapper.TArticlevisitorMapper" >
+  <resultMap id="BaseResultMap" type="com.gytlv.base.baseEntity.TArticlevisitor" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="VARCHAR" />
+    <result column="visitorname" property="visitorname" jdbcType="VARCHAR" />
+    <result column="visitorip" property="visitorip" jdbcType="VARCHAR" />
+    <result column="visitortime" property="visitortime" jdbcType="TIMESTAMP" />
+    <result column="visitoruserid" property="visitoruserid" jdbcType="VARCHAR" />
+    <result column="visitorarticleid" property="visitorarticleid" jdbcType="VARCHAR" />
+    <result column="visitorarticletypeid" property="visitorarticletypeid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, userid, visitorname, visitorip, visitortime, visitoruserid, visitorarticleid, 
+    visitorarticletypeid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gytlv.base.baseEntity.TArticlevisitorExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_articlevisitor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_articlevisitor
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_articlevisitor
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gytlv.base.baseEntity.TArticlevisitorExample" >
+    delete from t_articlevisitor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gytlv.base.baseEntity.TArticlevisitor" >
+    insert into t_articlevisitor (id, userid, visitorname, 
+      visitorip, visitortime, visitoruserid, 
+      visitorarticleid, visitorarticletypeid)
+    values (#{id,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{visitorname,jdbcType=VARCHAR}, 
+      #{visitorip,jdbcType=VARCHAR}, #{visitortime,jdbcType=TIMESTAMP}, #{visitoruserid,jdbcType=VARCHAR}, 
+      #{visitorarticleid,jdbcType=VARCHAR}, #{visitorarticletypeid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.gytlv.base.baseEntity.TArticlevisitor" >
+    insert into t_articlevisitor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="visitorname != null" >
+        visitorname,
+      </if>
+      <if test="visitorip != null" >
+        visitorip,
+      </if>
+      <if test="visitortime != null" >
+        visitortime,
+      </if>
+      <if test="visitoruserid != null" >
+        visitoruserid,
+      </if>
+      <if test="visitorarticleid != null" >
+        visitorarticleid,
+      </if>
+      <if test="visitorarticletypeid != null" >
+        visitorarticletypeid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="visitorname != null" >
+        #{visitorname,jdbcType=VARCHAR},
+      </if>
+      <if test="visitorip != null" >
+        #{visitorip,jdbcType=VARCHAR},
+      </if>
+      <if test="visitortime != null" >
+        #{visitortime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="visitoruserid != null" >
+        #{visitoruserid,jdbcType=VARCHAR},
+      </if>
+      <if test="visitorarticleid != null" >
+        #{visitorarticleid,jdbcType=VARCHAR},
+      </if>
+      <if test="visitorarticletypeid != null" >
+        #{visitorarticletypeid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gytlv.base.baseEntity.TArticlevisitorExample" resultType="java.lang.Integer" >
+    select count(*) from t_articlevisitor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_articlevisitor
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null" >
+        userid = #{record.userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.visitorname != null" >
+        visitorname = #{record.visitorname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.visitorip != null" >
+        visitorip = #{record.visitorip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.visitortime != null" >
+        visitortime = #{record.visitortime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.visitoruserid != null" >
+        visitoruserid = #{record.visitoruserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.visitorarticleid != null" >
+        visitorarticleid = #{record.visitorarticleid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.visitorarticletypeid != null" >
+        visitorarticletypeid = #{record.visitorarticletypeid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_articlevisitor
+    set id = #{record.id,jdbcType=VARCHAR},
+      userid = #{record.userid,jdbcType=VARCHAR},
+      visitorname = #{record.visitorname,jdbcType=VARCHAR},
+      visitorip = #{record.visitorip,jdbcType=VARCHAR},
+      visitortime = #{record.visitortime,jdbcType=TIMESTAMP},
+      visitoruserid = #{record.visitoruserid,jdbcType=VARCHAR},
+      visitorarticleid = #{record.visitorarticleid,jdbcType=VARCHAR},
+      visitorarticletypeid = #{record.visitorarticletypeid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gytlv.base.baseEntity.TArticlevisitor" >
+    update t_articlevisitor
+    <set >
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="visitorname != null" >
+        visitorname = #{visitorname,jdbcType=VARCHAR},
+      </if>
+      <if test="visitorip != null" >
+        visitorip = #{visitorip,jdbcType=VARCHAR},
+      </if>
+      <if test="visitortime != null" >
+        visitortime = #{visitortime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="visitoruserid != null" >
+        visitoruserid = #{visitoruserid,jdbcType=VARCHAR},
+      </if>
+      <if test="visitorarticleid != null" >
+        visitorarticleid = #{visitorarticleid,jdbcType=VARCHAR},
+      </if>
+      <if test="visitorarticletypeid != null" >
+        visitorarticletypeid = #{visitorarticletypeid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gytlv.base.baseEntity.TArticlevisitor" >
+    update t_articlevisitor
+    set userid = #{userid,jdbcType=VARCHAR},
+      visitorname = #{visitorname,jdbcType=VARCHAR},
+      visitorip = #{visitorip,jdbcType=VARCHAR},
+      visitortime = #{visitortime,jdbcType=TIMESTAMP},
+      visitoruserid = #{visitoruserid,jdbcType=VARCHAR},
+      visitorarticleid = #{visitorarticleid,jdbcType=VARCHAR},
+      visitorarticletypeid = #{visitorarticletypeid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
